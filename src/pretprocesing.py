@@ -66,8 +66,6 @@ def load_coordinates_from_frame(path):
             for num, hand in enumerate(results.multi_hand_landmarks):
                 mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS,)
 
-                display_image(image)
-
                 for landmark in hand.landmark:
                     coordinates.append(np.asarray([landmark.x * image_width, landmark.y * image_height]))
                     # coordinates.append(landmark.y * image_height)
@@ -106,7 +104,6 @@ def load_train_data(csv_file_path, base_path):
                     previous_frame = coordinates
                 video.append(coordinates)
             if extend_video:
-                # print(str(len(video)) + " " + row[0])
                 print(c)
                 train_data.append(np.asarray(video))
                 train_labels.append(int(row[2]))
