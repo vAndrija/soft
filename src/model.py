@@ -36,7 +36,7 @@ def fit_model(model, train_data, train_labels, validation_data, validation_label
     model.fit(train_data, train_labels, validation_data=(validation_data, validation_labels), epochs=100,
               batch_size=256, verbose=2)
     model.summary()
-    model.save_weights("../model/weights2.h5")
+    model.save_weights("../model/weights3.h5")
 
 
 if __name__ == '__main__':

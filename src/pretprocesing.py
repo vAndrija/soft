@@ -64,7 +64,7 @@ def load_coordinates_from_frame(path):
         coordinates = []
         if results.multi_hand_landmarks:
             for num, hand in enumerate(results.multi_hand_landmarks):
-                mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS,)
+                mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS, )
 
                 for landmark in hand.landmark:
                     coordinates.append(np.asarray([landmark.x * image_width, landmark.y * image_height]))
@@ -77,10 +77,11 @@ def load_coordinates_from_frame(path):
                 # )
 
         # display_image(image)
-        return coordinates
+        ok = False if len(coordinates) > 21 else True
+        return coordinates, ok
+
 
 def load_train_data(csv_file_path, base_path):
-    # preskocila videe na cijim pocetnim frejmovima na moze da se prepozna ruka
     train_data = []
     train_labels = []
     c = 0
@@ -89,21 +90,30 @@ def load_train_data(csv_file_path, base_path):
         for row in csv_reader:
             c += 1
             previous_frame = None
+            empty_previous_frame = 0
             video = []
             extend_video = True
             for frame in sorted(os.listdir(base_path + row[0])):
-                coordinates = load_coordinates_from_frame(base_path + row[0] + "/" + frame)
+                coordinates, ok = load_coordinates_from_frame(base_path + row[0] + "/" + frame)
+                if not ok:
+                    extend_video = False
+                    break
                 if len(coordinates) == 0:
                     if previous_frame is None:
-                        extend_video = False
-                        break
-                        # coordinates = [[0, 0]] * 30
+                        empty_previous_frame += 1
                     else:
                         coordinates = previous_frame
+                        video.append(coordinates)
                 else:
-                    previous_frame = coordinates
-                video.append(coordinates)
-            if extend_video:
+                    if empty_previous_frame == 0:
+                        previous_frame = coordinates
+                        video.append(coordinates)
+                    else:
+                        previous_frame = coordinates
+                        for i in range(empty_previous_frame + 1):
+                            video.append(coordinates)
+                        empty_previous_frame = 0
+            if extend_video and len(video) == 30:
                 print(c)
                 train_data.append(np.asarray(video))
                 train_labels.append(int(row[2]))
@@ -111,5 +121,4 @@ def load_train_data(csv_file_path, base_path):
 
 
 if __name__ == '__main__':
-    load_train_data("../data/test.csv", "../data/test/")
-
+    load_train_data("../data/train.csv", "../data/train/")
