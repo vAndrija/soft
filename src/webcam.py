@@ -3,6 +3,8 @@ import threading
 import numpy as np
 import mediapipe as mp
 from src.model import create_model
+import platform
+import pyautogui
 
 def load_coordinates_from_frame(frame):
     mp_drawing = mp.solutions.drawing_utils
@@ -103,6 +105,30 @@ def webcam_test(frames):
         max_value = max(result)
         index = result.index(max_value)
         print(index)
+        if max_value > 0.8:
+            os_name = platform.system()
+            print(os_name)
+            if os_name == "Linux":
+                execute_control_linux(index)
+
+def execute_control_linux(index):
+    if index == 2:
+        pyautogui.press('space')
+        print("Pauzirano")
+    if index == 0:
+        pyautogui.hotkey('ctrl', 'left')
+        pyautogui.hotkey('ctrl', 'left')
+        print("Prethodna")
+    if index == 1:
+        pyautogui.hotkey('ctrl', 'right')
+        print("Sledeca")
+    if index == 3:
+        pyautogui.hotkey('ctrl', 'shift', 'D')
+        pyautogui.hotkey('ctrl', 'shift', 'D')
+        print("Smanjeno")
+    if index == 4:
+        pyautogui.hotkey('ctrl', 'shift', 'V')
+        pyautogui.hotkey('ctrl', 'shift', 'V')
 
 if __name__ == '__main__':
     webcam()
