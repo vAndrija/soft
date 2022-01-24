@@ -1,11 +1,11 @@
-from src.model import create_model
+from src.zfnet_model import create_model
 from src.pretprocesing import load_train_data
 import numpy as np
 
 
 def test(x_test,y_test):
     model = create_model()
-    model.load_weights("../model/weights2-100.h5")
+    model.load_weights("../model/weights-zfnet1.h5")
 
     correct = 0
     result = model.predict(x_test, batch_size=1, verbose=0)

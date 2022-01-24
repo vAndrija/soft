@@ -2,7 +2,7 @@ import cv2
 import threading
 import numpy as np
 import mediapipe as mp
-from src.model import create_model
+from src.zfnet_model import create_model3
 import platform
 import pyautogui
 
@@ -96,8 +96,8 @@ def webcam():
 
 
 def webcam_test(frames):
-    model = create_model()
-    model.load_weights("../model/weights3.h5")
+    model = create_model3()
+    model.load_weights("../model/weights-zfnet1.h5")
     hand_data = get_hand_data_from_frames(frames)
     if hand_data is not None:
         result = model.predict(np.asarray([hand_data]), batch_size=1, verbose=0)
@@ -107,7 +107,6 @@ def webcam_test(frames):
         print(index)
         if max_value > 0.8:
             os_name = platform.system()
-            print(os_name)
             if os_name == "Linux":
                 execute_control_linux(index)
             if os_name == "Windows":
