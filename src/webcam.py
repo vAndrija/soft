@@ -110,6 +110,8 @@ def webcam_test(frames):
             print(os_name)
             if os_name == "Linux":
                 execute_control_linux(index)
+            if os_name == "Windows":
+                execute_control_windows(index)
 
 def execute_control_linux(index):
     if index == 2:
@@ -129,6 +131,27 @@ def execute_control_linux(index):
     if index == 4:
         pyautogui.hotkey('ctrl', 'shift', 'V')
         pyautogui.hotkey('ctrl', 'shift', 'V')
+        print("Pojacano")
+
+def execute_control_windows(index):
+    if index == 2:
+        pyautogui.press('space')
+        print('Pauzirano')
+    if index == 0:
+        pyautogui.hotkey('ctrl', 'left')
+        pyautogui.hotkey('ctrl', 'left')
+        print("Prethodna")
+    if index == 1:
+        pyautogui.hotkey('ctrl', 'right')
+        print("Sledeca")
+    if index == 3:
+        pyautogui.hotkey('ctrl', 'down')
+        pyautogui.hotkey('ctrl', 'down')
+        print("Smanjeno")
+    if index == 4:
+        pyautogui.hotkey('ctrl', 'up')
+        pyautogui.hotkey('ctrl', 'up')
+        print("Pojacano")
 
 if __name__ == '__main__':
     webcam()
