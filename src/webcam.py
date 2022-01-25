@@ -2,7 +2,7 @@ import cv2
 import threading
 import numpy as np
 import mediapipe as mp
-from src.zfnet_model import create_model3
+from src.zfnet_model import create_model
 import platform
 import pyautogui
 
@@ -96,7 +96,7 @@ def webcam():
 
 
 def webcam_test(frames):
-    model = create_model3()
+    model = create_model()
     model.load_weights("../model/weights-zfnet1.h5")
     hand_data = get_hand_data_from_frames(frames)
     if hand_data is not None:
@@ -128,8 +128,8 @@ def execute_control_linux(index):
         pyautogui.hotkey('ctrl', 'shift', 'D')
         print("Smanjeno")
     if index == 4:
-        pyautogui.hotkey('ctrl', 'shift', 'V')
-        pyautogui.hotkey('ctrl', 'shift', 'V')
+        pyautogui.hotkey('ctrl', 'shift', 'U')
+        pyautogui.hotkey('ctrl', 'shift', 'U')
         print("Pojacano")
 
 def execute_control_windows(index):
