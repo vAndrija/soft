@@ -3,7 +3,7 @@ import keras
 import tensorflow as tf
 from keras.models import Sequential
 from keras.layers import Dense, Conv2D, MaxPooling2D, Dropout, Flatten
-from pretprocesing import load_train_data
+from src.pretprocesing import load_train_data
 
 
 def create_model():
