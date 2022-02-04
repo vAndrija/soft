@@ -4,6 +4,9 @@
 - Jovana Jevtić, SW-20-2018
 - Andrija Vojnović, SW-7-2018
 
+## Demo:
+- https://www.youtube.com/watch?v=MytxlNeNbpQ&ab_channel=K1Televizija
+
 ## Requirements for running program:
 
 - Python 3.x
